@@ -136,10 +136,9 @@ for funcRecord in funcInfoArr:
             calleeRVA = dynFuncAddr - peImgBase
 
             jitFuncDB = jitFuncDB + struct.pack('I', callerRetRVA) + struct.pack('I', calleeRVA)
-            print(f'\t[+] got {hex(callerRetRVA)} invoke {hex(calleeRVA)}')
             dynamicImg[refOpcodeVA + 0] = 0xe8
             dynamicImg[refOpcodeVA + 1: refOpcodeVA + 5] = struct.pack('I', jitFuncRVA - (refOpcodeVA + 5))
-            #print(f'\t[+] patch x86 long jump at { hex(refOpcodeAddr) }')
+            print(f'\t[+] patch x86 long jump at { hex(refOpcodeAddr) }')
     
         else:
             print(f'\t[!] bad ref at: {hex(refOpcodeAddr)} -> {bytes(dynamicImg[refOpcodeVA: refOpcodeVA+5])}')
